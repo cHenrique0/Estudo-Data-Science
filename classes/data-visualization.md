@@ -9,8 +9,10 @@ A visualização dos dados é uma parte extremamente importante e existem vária
 - [Bokeh](https://bokeh.org/)
 - [Pygal](https://www.pygal.org/en/stable/)
 - [Geoplotlib](https://github.com/andrea-cuttone/geoplotlib)
+- [D3.js](http://d3js.org)
+- [ggplot](http://bit.ly/1ycOk1u)
 
-Durante o estudo ire focar no **Matplotlib**, mas experimentarei algumas outras bibliotecas quando necessário.
+Durante o estudo irei focar no **Matplotlib**, mas experimentarei algumas outras bibliotecas quando necessário.
 
 ---
 
@@ -55,7 +57,8 @@ O resultado é a imagem abaixo:
 
 #### 2. Gráfico de linha
 
-Para criar um gráfico de linha é simples:
+Gráficos de linha são os mais comuns e são uma boa escolha ao mostrar tendências.
+Para criar um gráfico de linha é simples, basta usar o comando `plt.plot()`:
 ```python
 from matplotlib import pyplot as plt
 
@@ -73,7 +76,34 @@ plt.ylabel("Bilhões de $")
 plt.show()
 ```
 Resultado:
+
 ![Line 2](img/line_2.png)
+
+Podemos personalizar o formato da linha:
+```python
+import matplotlib.pyplot as plt
+
+variance = [1, 2, 4, 8, 16, 32, 64, 128, 256]
+bias_squared = [256, 128, 64, 32, 16, 8, 4, 2, 1]
+total_error = [x+y for x, y in zip(variance, bias_squared)]
+xs = [i for i, _ in enumerate(variance)]
+
+# Fazendo mútiplas chamadas de plt.plot() podemos mostrar mútiplos gráficos numa 
+# única figura.
+
+plt.plot(xs, variance, 'g-', label="variance") # linha verde sólida
+plt.plot(xs, bias_squared, 'r-.', label="bias^2") # linha vermelha tracejada com ponto
+plt.plot(xs, total_error, 'b:', label="total error") # linha azul pontilhada
+
+# mostrando a legenda(label)
+plt.legend()
+plt.xlabel("Complexidade do modelo")
+plt.title("Compromisso entre Polarização e Variância")
+plt.show()
+```
+E o resultado será:
+
+![Line 3](img/line_3.png)
 
 #### 3. Gráfico de barra
 
@@ -85,9 +115,7 @@ Como exemplo, vamos montar um gráfico que mostra quantos Oscar cada filme ganho
 movies = ["Annie Hall", "Ben-Hur", "Casablanca", "Gandhi", "West Side Story"]
 num_oscars = [5, 11, 3, 8, 10]
 
-# barras tem o tamanho padrão de 0.8, então para centralizar cada barra, 
-# adionaremos 0.1 às coordenadas da esquerda.
-xs = [i + 0.1 for i, _ in enumerate(movies)]
+xs = [i for i, _ in enumerate(movies)]
 
 plt.bar(xs, num_oscars)
 
@@ -95,11 +123,12 @@ plt.ylabel("n° de Premiações")
 plt.title("Meus Filmes Favoritos")
 
 # nomeia o eixo x com os nomes do filmes
-plt.xticks([i+0.5 for i,_ in enumerate(movies)], movies)
+plt.xticks([i for i,_ in enumerate(movies)], movies)
 
 plt.show()
 ```
 O código acima gera o seguinte gráfico de barras:
+
 ![Bars](img/bar.png)
 
 Gráficos de barras também são utilizados para criar histogramas, afim de explorar visualmente como os valores estão distribuídos.
@@ -126,4 +155,32 @@ plt.ylabel("Nº de Alunos")
 plt.title("Distribuição das Notas do Teste 1")
 ```
 Este trecho de código nos fornece o seguinte histograma:
+
 ![Histogram](img/histogram.png)
+
+#### 4. Gráfico de dispersão
+
+Se quisermos visualizar o relacionamente entre dois pares de conjuntos de dados, podemos usar um gráfico de dispersão.
+No exemplo a seguir, o gráfico de dispersão mostra o relacionamente entre o número de amigos que seus usuários tem e o número de minutos que eles passam no site por dia:
+```python
+import matplotlib.pyplot as plt
+
+friends = [ 70, 65, 72, 63, 71, 64, 60, 64, 67]
+minutes = [175, 170, 205, 120, 220, 130, 105, 145, 190]
+labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
+
+plt.scatter(friends, minutes)
+
+# Nomeia as posições
+for label, friend_count, minutes_count in zip(labels, friends, minutes):
+    plt.annotate(label, xy=(friend_count, minutes_count), xytext=(5, -5), textcoords='offset points')
+
+plt.title("Minutoes Diários  vs. Número de Amigos")
+plt.xlabel("Nº de amigos")
+plt.ylabel("Minutos diários passados no site")
+plt.show()
+```
+A dispersão é mostrada na imagem:
+
+![Scatter](img/scatter.png)
+

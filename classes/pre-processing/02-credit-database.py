@@ -7,7 +7,7 @@ import pandas as pd
 
 
 # lendo o dataset
-db_credit = pd.read_csv("../databases/credit_data.csv")
+db_credit = pd.read_csv("src/databases/credit_data.csv")
 
 # imprime as 5 primeiras e 5 ultimas linhas do arquivo
 """ print(db_credit) """
@@ -22,7 +22,7 @@ db_credit = pd.read_csv("../databases/credit_data.csv")
 """ print(db_credit.describe()) """
 
 # aplicando um filtro para saber qual a pessoa com a maior renda anual
-print(db_credit[db_credit['income'] == db_credit['income'].max()])
+""" print(db_credit[db_credit['income'] == db_credit['income'].max()]) """
 
 # aplicando um filtro para saber qual a pessoa com a menor dívida
-print(db_credit[db_credit['loan'] == db_credit['loan'].min()])
+""" print(db_credit[db_credit['loan'] == db_credit['loan'].min()]) """

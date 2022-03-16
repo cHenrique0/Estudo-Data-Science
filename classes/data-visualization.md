@@ -53,7 +53,7 @@ plt.show()
 ```
 O resultado é a imagem abaixo:
 
-![Line 1](img/line_1.png)
+![Line 1](src/img/line_1.png)
 
 #### 2. Gráfico de linha
 
@@ -77,7 +77,7 @@ plt.show()
 ```
 Resultado:
 
-![Line 2](img/line_2.png)
+![Line 2](src/img/line_2.png)
 
 Podemos personalizar o formato da linha:
 ```python
@@ -103,7 +103,7 @@ plt.show()
 ```
 E o resultado será:
 
-![Line 3](img/line_3.png)
+![Line 3](src/img/line_3.png)
 
 #### 3. Gráfico de barra
 
@@ -129,7 +129,7 @@ plt.show()
 ```
 O código acima gera o seguinte gráfico de barras:
 
-![Bars](img/bar.png)
+![Bars](src/img/bar.png)
 
 Gráficos de barras também são utilizados para criar histogramas, afim de explorar visualmente como os valores estão distribuídos.
 
@@ -156,7 +156,7 @@ plt.title("Distribuição das Notas do Teste 1")
 ```
 Este trecho de código nos fornece o seguinte histograma:
 
-![Histogram](img/histogram.png)
+![Histogram](src/img/histogram.png)
 
 #### 4. Gráfico de dispersão
 
@@ -182,5 +182,5 @@ plt.show()
 ```
 A dispersão é mostrada na imagem:
 
-![Scatter](img/scatter.png)
+![Scatter](src/img/scatter.png)
 

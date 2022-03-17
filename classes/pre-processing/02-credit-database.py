@@ -7,7 +7,7 @@ import pandas as pd
 
 
 # lendo o dataset
-db_credit = pd.read_csv("src/databases/credit_data.csv")
+db_credit = pd.read_csv("../src/databases/credit_data.csv")
 
 # imprime as 5 primeiras e 5 ultimas linhas do arquivo
 """ print(db_credit) """

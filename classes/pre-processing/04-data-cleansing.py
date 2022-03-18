@@ -1,8 +1,6 @@
 
 import pandas as pd
-# import numpy as np
-# import seaborn as sns
-# import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
 
 """
 # Fazendo a limpeza do dados(data cleansing)
@@ -48,6 +46,32 @@ import pandas as pd
     Cria-se duas variaveis, normalmente chamadas de x e y, onde:
         - x -> armazena os atributos previsores
         - y -> armazena a classe
+    
+5. Escalonamento dos atributos:
+
+    * Uma grande diferença entre os valores dos atributos pode ser um problema para
+    algoritmos de machine learning, principalmente os baseados em distância(KNN, Redes
+    Neurais Artificiais, etc), pois eles podem tratar um atributo como mais importante 
+    que outros apenas por ter um valor mais alto.
+    Portanto, é muito importante que façamos um escalonamento dos dados, que nada mais
+    é que colocar todos os valores na mesma escala.
+    
+    * Existem, basicamente, dois cálculos para isso:
+
+    1. Padronização(Standardisation):
+
+                x - mean(x)
+        x = ---------------------
+            standard_deviation(x)
+
+    2. Normalização(Normalization):
+
+               x - min(x)
+        x = ----------------
+             max(x) - min(x)
+
+    * A padronização é mais indicada quando o dataset possui outliers(dados muito fora
+    do padrão).
 """
 
 # Carregando os dados
@@ -113,4 +137,21 @@ print(base_credit.loc[(base_credit['clientid'] == 29) |
 
 # Dividindo os dados: Previsores x Classe
 x_credit = base_credit.iloc[:, 1:4].values  # .values -> retorna um array numpy
-y_credit = base_credit.iloc[:, 4].values
+y_credit = base_credit.iloc[:, 4].values # : -> todas as linhas/ 4 -> indice da coluna
+
+# Escalonamento:
+""" 
+print("ANTES de fazer o escalonamento")
+print(f"min inocome, age and loan: {x_credit[:, 0].min()}, {x_credit[:, 1].min()}, {x_credit[:, 2].min()}")
+print(f"max inocome, age and loan: {x_credit[:, 0].max()}, {x_credit[:, 1].max()}, {x_credit[:, 2].max()}")
+"""
+
+# fazendo a padronização
+scaler_credit = StandardScaler()
+x_credit = scaler_credit.fit_transform(x_credit)
+
+"""
+print("\nDEPOIS de fazer o escalonamento")
+print(f"min inocome, age and loan: {x_credit[:, 0].min()}, {x_credit[:, 1].min()}, {x_credit[:, 2].min()}")
+print(f"max inocome, age and loan: {x_credit[:, 0].max()}, {x_credit[:, 1].max()}, {x_credit[:, 2].max()}")
+"""

@@ -5,7 +5,7 @@ import pandas as pd
 # import matplotlib.pyplot as plt
 
 
-# Tratando dados inconsistentes e faltantes
+# Tratando dados inconsistentes e ausentes
 
 base_credit = pd.read_csv("../src/databases/credit_data.csv")
 
@@ -16,16 +16,31 @@ base_credit = pd.read_csv("../src/databases/credit_data.csv")
         Faz uma busca do 'df_label' informado e retorna um pandas DataFrame.
         Caso a função não encontre o label, retorna um KeyError
 
-2. Corrigindo os dados inconsistentes:
+2. Corrigindo os dados inconsistentes(valores inválidos):
 
-    Há algumas técnicas para corrigir os dados inconsistentes:
+    * Há algumas técnicas para corrigir os dados inconsistentes:
 
     2.1. Apagar a coluna com os dados defeituosos
     2.2. Apagar os registros com os dados defeituosos
     2.3. Preencher os valores inconsistentes manualmente(RECOMENDÁVEL)
-    2.4. Preencher os valores com a média dos valores
+    2.4. Preencher os valores com a média dos valores(USUAL)
 
-3. Corrigindo dados faltantes:
+3. Corrigindo dados ausentes(valores não preenchidos):
+
+    * Dados ausentes -> NaN -> Not a Number
+
+    df_name.isnull() -> retorna True ou False para todos os registros das colunas do dataset.
+        - se True, então o valor não foi preenchido(dado ausente)
+        - usando sum() junto de isnull() temos a quantidade de valores ausentes no dataset.
+
+    pd.isnull(df_name[column]) -> retorna um dataframe com os registros com valores NaN
+
+    * Para corrigir podemos usar a tecnica de preencher os dados ausentes com a 
+    média dos valores em questão.
+
+    df_name.fillna(value, inplace=True) -> preenche os dados NaN com o valor especificado
+        - value -> valor que será preenchido
+        - inplace -> se True, altera o dataframe com os novos dados
 
 """
 
@@ -59,4 +74,28 @@ print(base_credit_withou_wrong_data)
 age_mean = base_credit['age'][base_credit['age'] > 0].mean()
 # Substituindo os dados incorretos com o valor da média
 base_credit.loc[base_credit['age'] < 0, 'age'] = age_mean
-print(base_credit.head(30))
+
+# Localizando valores ausentes(dados não preenchidos):
+# print(base_credit.isnull().sum())   # quantidade de dados ausentes em cada coluna
+# print(base_credit['age'].isnull().sum()) # quantidade de dados ausentes numa coluna especifica
+
+# Visualizando os registros não preenchidos
+print("ANTES de preencher com a média")
+print(base_credit.loc[pd.isnull(base_credit['age'])])
+
+# Corrigindo os dados ausentes: preenchendo com a média
+base_credit['age'].fillna(age_mean, inplace=True) # age_mean foi calculado na linha 74
+print("\nDEPOIS de preencher com a média")
+"""
+print(base_credit.loc[pd.isnull(base_credit['age'])]) # retorna um DF vazio
+"""
+
+# verificando as alterações feitas atraves do id do cliente
+# | (pipe) -> ou lógico
+"""
+print(base_credit.loc[(base_credit['clientid'] == 29) |
+                      (base_credit['clientid'] == 31) |
+                      (base_credit['clientid'] == 32)])
+"""
+# Outra forma: isin(list)
+print(base_credit.loc[base_credit['clientid'].isin([29, 31, 32])])
